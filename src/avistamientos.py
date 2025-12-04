@@ -28,14 +28,27 @@ Avistamiento = NamedTuple('Avistamiento', [
 # Función de lectura que crea una lista de avistamientos
 def lee_avistamientos(fichero:str)->list[Avistamiento]:
     '''
-    Lee un fichero de entrada y devuelve una lista de tuplas. 
+    Lee un fichero de entrada y devuelve una listala de tuplas. 
     Para convertir la cadena con la fecha y la hora al tipo datetime, usar
         datetime.strptime(fecha_hora,'%m/%d/%Y %H:%M')    
     
     :param fichero: ruta del fichero csv que contiene los datos en codificación utf-8 
     :return: lista de tuplas con la información de los avistamientos 
     '''
-    pass
+    res = []
+    with open(fichero, encoding = "utf-8") as f:
+        lector = csv.reader(f)
+        next(lector)
+        for datetime,city,state,shape,duration,comments,latitude,longitude in lector:
+            fechahora = parse_datetime(datetime, "%m/%d/%Y %H:%M")
+            city = str(city)
+            state = str(state)
+            shape = str(shape)
+            duration = int(duration)
+            comments = str(comments)
+            ubicacion = Coordenadas(float(latitude), float(longitude))
+            res.append(Avistamiento(fechahora, city, state, shape, duration, comments, ubicacion))
+    return res
 
 ### 2.1 Número de avistamientos producidos en una fecha
 def numero_avistamientos_fecha(avistamientos: list[Avistamiento], fecha: datetime.date)->int:
@@ -49,12 +62,16 @@ def numero_avistamientos_fecha(avistamientos: list[Avistamiento], fecha: datetim
     :return:  Número de avistamientos producidos en la fecha 
     '''
     # Implementación con bucles
-    pass    
+    res = 0
+    for avistamiento in avistamientos:
+        if avistamiento.fechahora.date() == fecha:
+            res += 1
+    return res 
 
 
 # Por comprensión
 def numero_avistamientos_fecha2(avistamientos: list[Avistamiento], fecha: datetime.date)->int:
-    pass
+    return sum(1 for a in avistamientos if a.fechahora.date() == fecha)
 
 ### 2.2 Número de formas observadas en un conjunto de estados
 def formas_estados(avistamientos:list[Avistamiento], estados:set[str])->int:
@@ -66,7 +83,8 @@ def formas_estados(avistamientos:list[Avistamiento], estados:set[str])->int:
     :return: Número de formas distintas observadas en los avistamientos producidos en alguno de los estados indicados por el parámetro "estados"
     '''
     #Implementación con bucles
-    pass
+    return sum(1 for a in avistamientos if a.estado in estados)
+
 
 def formas_estados2(avistamientos:list[Avistamiento], estados:set[str])->int:
     # Por comprensión
@@ -85,6 +103,7 @@ def duracion_total(avistamientos:list[Avistamiento], estado:str)->int:
     # Implementación con bucles
     pass
 
+"""
 ## Por compresión
 def duracion_total2(avistamientos:list[Avistamiento], estado:str)->int:
     pass
@@ -458,7 +477,7 @@ def avistamientos_mayor_duracion_por_estado(avistamientos:list[Avistamiento], n:
     #con bucles
     pass
 
-def avistamientos_mayor_duracion_por_estado2(avistamientos:list[Avistamiento], n:int=3)->dict[str,Avistamiento]
+def avistamientos_mayor_duracion_por_estado2(avistamientos:list[Avistamiento], n:int=3)->dict[str,Avistamiento]:
     # Usando una definición por compresión
     pass
 
@@ -545,3 +564,4 @@ def avistamiento_mas_reciente_por_estado(avistamientos:list[Avistamiento])->dict
     cuyos valores sean los valores máximos de las listas, según el campo fechahora.
     '''
     pass
+    """

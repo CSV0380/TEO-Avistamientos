@@ -9,11 +9,11 @@ from typing import Iterable, TypeVar
 K = TypeVar('K')
 V = TypeVar('V')
 
-
 def mostrar_iterable_enumerado(iterable:Iterable)->None:
     for indx, elem in enumerate(iterable, 1):
         print(f"\t{indx}-{elem}")
 
+"""
 def mostrar_diccionario(dicc:dict[K,V])->None:
     for clave, valor in dicc.items():
         print(f"{clave} ==>")
@@ -22,14 +22,13 @@ def mostrar_diccionario(dicc:dict[K,V])->None:
 def mostrar_diccionario2(dicc:dict[K,V])->None:
     for clave, valor in dicc.items():
         print(f"\t{clave}: {valor}")
-
+"""
 def test_lee_avistamientos(avistamientos:list[Avistamiento])->None:
     print(f"Se han leido {len(avistamientos)}  avistamientos")
     print("Los cinco avistamientos primeros son: ")
     mostrar_iterable_enumerado(avistamientos [:5])
     print("Los cinco avistamientos últimos son: ")
     mostrar_iterable_enumerado(avistamientos [-5:])
-
 def test_numero_avistamientos_fecha(avistamientos:list[Avistamiento], fecha:datetime)->None:
     res = av.numero_avistamientos_fecha(avistamientos, fecha)
     fechastr = fecha.strftime("%m/%d/%Y")
@@ -40,6 +39,7 @@ def test_formas_estados(avistamientos:list[Avistamiento], estados:set[str])->int
     res = av.formas_estados(avistamientos, estados)
     print(f"Número de formas distintas observadas en los estados {estados_str}: {res}")
     
+"""
 def test_duracion_total(avistamientos:list[Avistamiento], estado:str)->None:
     res = av.duracion_total(avistamientos, estado)
     print(f"Duración total de los avistamientos en {estado}: {res} segundos.")
@@ -161,114 +161,116 @@ def test_avistamiento_mas_reciente_por_estado(avistamientos:list[Avistamiento])-
     print("Mostrando la fecha del último avistamiento por estado")
     mostrar_diccionario2(indice)
 
+"""
+
 def main():
     # Establecemos la configuración local de la hora al formato
     # que esté definido en el ordenador del usuario
     locale.setlocale(locale.LC_TIME, '')
 
     avistamientos = av.lee_avistamientos("data/ovnis.csv")
-    test_lee_avistamientos (avistamientos)
+    test_lee_avistamientos(avistamientos)
 
-    ### 2.1 ##########################################################
+    # ### 2.1 ##########################################################
     print("2.1" , "#"*70)
     fecha = datetime(2005, 5, 1).date()
     test_numero_avistamientos_fecha(avistamientos, fecha)
 
 
-    ### 2.2 ##########################################################
+    # ### 2.2 ##########################################################
     print("2.2" , "#"*70)
     conjunto_estados = {'in', 'nm', 'pa', 'wa'}
     test_formas_estados(avistamientos, conjunto_estados)
 
-    ### 2.3 ##########################################################
-    print("2.3" , "#"*70)
-    for estado in conjunto_estados:
-        test_duracion_total(avistamientos, estado)
+    # ### 2.3 ##########################################################
+    # print("2.3" , "#"*70)
+    # for estado in conjunto_estados:
+    #     test_duracion_total(avistamientos, estado)
 
-    ### 2.4 ##########################################################
-    print("2.4" , "#"*70)
-    coordenadas = Coordenadas(40.1933333,-85.3863889)
-    radio = 0.1        
-    test_avistamientos_cercanos_ubicacion(avistamientos,coordenadas, radio)
+    # ### 2.4 ##########################################################
+    # print("2.4" , "#"*70)
+    # coordenadas = Coordenadas(40.1933333,-85.3863889)
+    # radio = 0.1        
+    # test_avistamientos_cercanos_ubicacion(avistamientos,coordenadas, radio)
 
-    ### 3.1 ##########################################################
-    print("3.1" , "#"*70)
-    forma = 'circle'
-    test_avistamiento_mayor_duracion(avistamientos, forma)
+    # ### 3.1 ##########################################################
+    # print("3.1" , "#"*70)
+    # forma = 'circle'
+    # test_avistamiento_mayor_duracion(avistamientos, forma)
 
-    ### 3.2 ##########################################################
-    print("3.2" , "#"*70)
-    coordenadas = Coordenadas(40.1933333,-85.3863889)
-    test_avistamiento_cercano_mayor_duracion(avistamientos, coordenadas)
+    # ### 3.2 ##########################################################
+    # print("3.2" , "#"*70)
+    # coordenadas = Coordenadas(40.1933333,-85.3863889)
+    # test_avistamiento_cercano_mayor_duracion(avistamientos, coordenadas)
 
-    ### 3.3 ##########################################################
-    print("3.3" , "#"*70)
-    f1 =  datetime(2005,5,1).date()
-    f2 = datetime(2005,5,1).date()
-    test_avistamientos_fechas(avistamientos, f1, f2)
-    test_avistamientos_fechas(avistamientos,  fecha_final=f1)
-    test_avistamientos_fechas(avistamientos,  fecha_inicial=f1)
+    # ### 3.3 ##########################################################
+    # print("3.3" , "#"*70)
+    # f1 =  datetime(2005,5,1).date()
+    # f2 = datetime(2005,5,1).date()
+    # test_avistamientos_fechas(avistamientos, f1, f2)
+    # test_avistamientos_fechas(avistamientos,  fecha_final=f1)
+    # test_avistamientos_fechas(avistamientos,  fecha_inicial=f1)
 
-    ### 3.4 ##########################################################
-    print("3.4" , "#"*70)
-    test_comentario_mas_largo(avistamientos, 2005, "ufo")
+    # ### 3.4 ##########################################################
+    # print("3.4" , "#"*70)
+    # test_comentario_mas_largo(avistamientos, 2005, "ufo")
     
-    ### 3.5 ##########################################################
-    print("3.5" , "#"*70)
-    test_media_dias_entre_avistamientos(avistamientos)
-    test_media_dias_entre_avistamientos(avistamientos, 1979)
+    # ### 3.5 ##########################################################
+    # print("3.5" , "#"*70)
+    # test_media_dias_entre_avistamientos(avistamientos)
+    # test_media_dias_entre_avistamientos(avistamientos, 1979)
 
-    ### 4.1 ##########################################################
-    print("4.1" , "#"*70)
-    test_avistamientos_por_fecha(avistamientos)
+    # ### 4.1 ##########################################################
+    # print("4.1" , "#"*70)
+    # test_avistamientos_por_fecha(avistamientos)
 
-    ### 4.2 ##########################################################
-    print("4.2" , "#"*70)
-    test_formas_por_mes(avistamientos)
+    # ### 4.2 ##########################################################
+    # print("4.2" , "#"*70)
+    # test_formas_por_mes(avistamientos)
 
-    ### 4.3 ##########################################################
-    print("4.3" , "#"*70)
-    test_numero_avistamientos_por_año(avistamientos)
+    # ### 4.3 ##########################################################
+    # print("4.3" , "#"*70)
+    # test_numero_avistamientos_por_año(avistamientos)
 
-    ### 4.4 ##########################################################
-    print("4.4" , "#"*70)
-    test_num_avistamientos_por_mes(avistamientos)
+    # ### 4.4 ##########################################################
+    # print("4.4" , "#"*70)
+    # test_num_avistamientos_por_mes(avistamientos)
 
-    ### 4.5 ##########################################################
-    print("4.5" , "#"*70)
-    test_coordenadas_mas_avistamientos(avistamientos)
+    # ### 4.5 ##########################################################
+    # print("4.5" , "#"*70)
+    # test_coordenadas_mas_avistamientos(avistamientos)
 
-    ### 4.6 ##########################################################
-    print("4.6" , "#"*70)
-    test_hora_mas_avistamientos(avistamientos)
+    # ### 4.6 ##########################################################
+    # print("4.6" , "#"*70)
+    # test_hora_mas_avistamientos(avistamientos)
 
-    ### 4.7 ##########################################################
-    print("4.7" , "#"*70)
-    test_longitud_media_comentarios_por_estado(avistamientos)
+    # ### 4.7 ##########################################################
+    # print("4.7" , "#"*70)
+    # test_longitud_media_comentarios_por_estado(avistamientos)
 
-    ### 4.8 ##########################################################
-    print("4.8" , "#"*70)
-    test_porc_avistamientos_por_forma(avistamientos)
+    # ### 4.8 ##########################################################
+    # print("4.8" , "#"*70)
+    # test_porc_avistamientos_por_forma(avistamientos)
 
-    ### 4.9 ##########################################################
-    print("4.9" , "#"*70)
-    test_avistamientos_mayor_duracion_por_estado(avistamientos)
+    # ### 4.9 ##########################################################
+    # print("4.9" , "#"*70)
+    # test_avistamientos_mayor_duracion_por_estado(avistamientos)
 
-    ### 4.10 ##########################################################
-    print("4.10" , "#"*70)
-    test_año_mas_avistamientos_forma(avistamientos, 'circle')
+    # ### 4.10 ##########################################################
+    # print("4.10" , "#"*70)
+    # test_año_mas_avistamientos_forma(avistamientos, 'circle')
 
-    ### 4.11 ##########################################################
-    print("4.11" , "#"*70)
-    test_estados_mas_avistamientos(avistamientos)
+    # ### 4.11 ##########################################################
+    # print("4.11" , "#"*70)
+    # test_estados_mas_avistamientos(avistamientos)
 
-    ### 4.12 ##########################################################
-    print("4.12" , "#"*70)
-    test_duracion_total_avistamientos_año(avistamientos, 'ca')
+    # ### 4.12 ##########################################################
+    # print("4.12" , "#"*70)
+    # test_duracion_total_avistamientos_año(avistamientos, 'ca')
 
-    ### 4.13 ##########################################################
-    print("4.13" , "#"*70)
-    test_avistamiento_mas_reciente_por_estado(avistamientos)
+    # ### 4.13 ##########################################################
+    # print("4.13" , "#"*70)
+    # test_avistamiento_mas_reciente_por_estado(avistamientos)
 
 if __name__=="__main__":
     main()

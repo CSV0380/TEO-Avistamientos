@@ -11,5 +11,7 @@ def parse_datetime(cadena:str, formato:str = '%d/%m/%Y-%H:%M:%S')->datetime:
     :param formato: cadena con el formato de la fecha y la hora, el formato por defecto es '%d/%m/%Y-%H:%M:%S'
     :return: objeto fecha-hora
     '''
-    return datetime.strptime(cadena, formato)
+
+    parseo = datetime.strptime(cadena, formato)
+    return parseo
 
